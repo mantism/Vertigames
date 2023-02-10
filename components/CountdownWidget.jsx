@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Countdown, { CountdownApi } from 'react-countdown';;
 
 let countdownApi = null;
 
-const CountdownWidget = () => {
+export default function CountdownWidget() {
+  const [date, setDate] = useState(Date.now() + 20000);
+
   const handleKeyPress = useCallback((event) => {
     const handleReset = () => {
       setDate(Date.now() + 20000);

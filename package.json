@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lexical/react": "^0.8.0",
     "@types/": "trickingapi/tricking-ts",
+    "lexical": "^0.8.0",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-countdown": "^2.3.5",

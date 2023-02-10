@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import styles from '../styles/Home.module.css'
 import { fetchPostJson } from '../utils/apiUtils'
 import React from 'react';
+import ChallengeEditor from '../components/ChallengeEditor'
 
 export default function Home() {
   const [currentRound, setCurrentRound] = useState(0);
@@ -11,7 +12,6 @@ export default function Home() {
   const [challenge, setChallenge] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [points, setPoints] = useState('');
-  const [date, setDate] = useState(Date.now() + 20000);
 
   const handleKeyPress = useCallback(async (event) => {
     if (event.keyCode === 39) {
@@ -55,7 +55,7 @@ export default function Home() {
         <h1 className={styles.title}>
           2023 Vertigames
         </h1>
-        <h2>
+        {false && <h2>
           {currentRound === 0 ? 
             <div className='logos'>
               <Image src='/V-Logo.png' alt='v-logo' width='320' height='320'/>
@@ -65,13 +65,14 @@ export default function Home() {
                Round {currentRound} - {points} {currentRound < 3 ? 'POINTS NEEDED TO MOVE ON' : 'POINTS WINS'}
             </div>
           }
-        </h2>
-        <h2>
+        </h2>}
+        {false && <h2>
           {!isLoading && challenge}
-        </h2>
+        </h2>}
         {isLoading && 
           <Image src='/intro.gif' alt='intro gif' width='320' height='180'/>
         }
+        <ChallengeEditor />
       </div>
       
       <style jsx>{`
@@ -84,7 +85,7 @@ export default function Home() {
         }
 
         h1 {
-          font-size: 10em;
+          font-size: 5em;
           padding: 0;
           margin: 0;
         }
