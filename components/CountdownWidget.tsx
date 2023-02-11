@@ -48,7 +48,8 @@ export default function CountdownWidget() {
 
   return (
     <Countdown 
-      date={date} 
+      date={date}
+      //@ts-ignore
       handleUpdate={handleUpdate}
       ref={setRef}
       autoStart={false}

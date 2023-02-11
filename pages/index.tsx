@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { useEffect, useState, useCallback } from 'react'
 import styles from '../styles/Home.module.css'
 import { fetchPostJson } from '../utils/apiUtils'
-import React from 'react';
 import ChallengeEditor from '../components/ChallengeEditor'
 
 export default function Home() {
