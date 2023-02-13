@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {LexicalComposer} from '@lexical/react/LexicalComposer';
 import {PlainTextPlugin} from '@lexical/react/LexicalPlainTextPlugin';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
@@ -12,6 +12,10 @@ import TreeViewPlugin from '../lexical/plugins/TreeViewPlugin';
 import onChange from '../lexical/OnChange';
 import EmoticonPlugin from '../lexical/plugins/EmoticonPlugin';
 import { EmoticonNode } from '../lexical/nodes/EmoticonNode';
+import ChallengeCreatorPlugin from '../lexical/plugins/ChallengeCreatorPlugin';
+import { TricksClient } from '@trickingapi/tricking-ts';
+import TrickPlugin from '../lexical/plugins/TrickPlugin';
+import { TrickNode } from '../lexical/nodes/TrickNode';
 
 const theme = {
   // Theme styling goes here
@@ -33,8 +37,16 @@ export default function ChallengeEditor() {
     namespace: 'MyEditor', 
     theme,
     onError,
-    nodes: [EmoticonNode]
+    nodes: [EmoticonNode, TrickNode]
   };
+
+  useEffect(() => {
+    const tricksClient = new TricksClient();
+    tricksClient.getAllTrickNames().then((trickNames: string[]) => {
+      const trickSet = new Set<string>(trickNames);
+      TrickNode.setTricks(trickSet);
+    });
+  }, []);
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
@@ -48,6 +60,8 @@ export default function ChallengeEditor() {
         <HistoryPlugin />
         <TreeViewPlugin />
         <EmoticonPlugin />
+        <TrickPlugin />
+        <ChallengeCreatorPlugin />
         <CustomAutoFocusPlugin />
       </div>
     </LexicalComposer>

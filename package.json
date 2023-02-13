@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@lexical/react": "^0.8.0",
+    "@trickingapi/tricking-ts": "^0.1.2",
     "@types/": "trickingapi/tricking-ts",
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",

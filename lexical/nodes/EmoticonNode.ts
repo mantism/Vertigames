@@ -1,7 +1,7 @@
 import { TextNode, EditorConfig, SerializedTextNode } from "lexical";
 
 export class EmoticonNode extends TextNode {
-  __className;
+  __className: string;
 
   constructor(className: string, text: string, key?: string) {
     super(text, key);
@@ -12,7 +12,7 @@ export class EmoticonNode extends TextNode {
     return 'emoticon';
   }
 
-  static clone(node) {
+  static clone(node: EmoticonNode) {
     return new EmoticonNode(node.__className, node.__text, node.__key);
   }
 
@@ -41,9 +41,9 @@ export class EmoticonNode extends TextNode {
     };
   }
 
-  importJSON(json: SerializedTextNode) {
-    super.importJSON(json);
-    this.__className = json.text;
+  importJSON(json: SerializedTextNode): EmoticonNode {
+    const node = super.importJSON(json);
+    return new EmoticonNode(node.__text, node.__text, node.__key);
   }
 }
 

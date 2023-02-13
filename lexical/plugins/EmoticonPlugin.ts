@@ -6,9 +6,7 @@ import { $createEmoticonNode } from '../nodes/EmoticonNode';
 
 function emoticonTransform(node: TextNode) {
   const textContent = node.getTextContent();
-  console.log('emoticonTransform', textContent);
   if (textContent === ':)') {
-    console.log('oh');
     node.replace($createEmoticonNode(':)', '🙂'));
   } else if (textContent === ':(') {
     node.replace($createEmoticonNode(':(', '🙁'));
