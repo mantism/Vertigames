@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@lexical/react": "^0.8.0",
+    "@mui/material": "^5.11.8",
     "@trickingapi/tricking-ts": "^0.1.2",
     "@types/": "trickingapi/tricking-ts",
     "@types/node": "^18.13.0",

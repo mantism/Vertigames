@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import styles from '../styles/Home.module.css'
 import { fetchPostJson } from '../utils/apiUtils'
 import ChallengeEditor from '../components/ChallengeEditor'
+import TrickAutoComplete from '../components/TrickAutoComplete'
 
 export default function Home() {
   const [currentRound, setCurrentRound] = useState(0);
@@ -71,6 +72,7 @@ export default function Home() {
         {isLoading && 
           <Image src='/intro.gif' alt='intro gif' width='320' height='180'/>
         }
+        <TrickAutoComplete/>
         <ChallengeEditor />
       </div>
       
