@@ -1,6 +1,8 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
-import { KEY_ENTER_COMMAND, COMMAND_PRIORITY_EDITOR, RangeSelection } from "lexical";
-import {$getRoot, $getSelection} from 'lexical';
+import { KEY_ENTER_COMMAND, COMMAND_PRIORITY_EDITOR, RangeSelection, LexicalCommand } from "lexical";
+import {$getRoot, $getSelection, createCommand} from 'lexical';
+
+export const CREATE_CHALLENGE_COMMAND: LexicalCommand<string> = createCommand();
 
 export default function ChallengeCreatorPlugin() {
   const [editor] = useLexicalComposerContext();

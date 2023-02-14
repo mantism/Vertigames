@@ -4,18 +4,17 @@ import TextField from "@mui/material/TextField";
 import { FunctionComponent } from "react";
 import { TrickNode } from "../lexical/nodes/TrickNode";
 
-const tricks = [];
-  TrickNode.getTricks().forEach((trick) => {
-    tricks.push(trick);
-});
+interface IProps {
+  tricks: string[]
+}
 
 
-const TrickAutoComplete: FunctionComponent = () => {
+const TrickAutoComplete: FunctionComponent<IProps> = (props: IProps) => {
   return (
     <Autocomplete
       id="trick-autocomplete"
       sx={{ width: 300 }}
-      options={tricks}
+      options={props.tricks}
       autoHighlight
       getOptionLabel={(option) => option}
       renderOption={(props, option) => (

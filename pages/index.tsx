@@ -5,6 +5,8 @@ import styles from '../styles/Home.module.css'
 import { fetchPostJson } from '../utils/apiUtils'
 import ChallengeEditor from '../components/ChallengeEditor'
 import TrickAutoComplete from '../components/TrickAutoComplete'
+import { TricksClient } from '@trickingapi/tricking-ts'
+import { TrickNode } from '../lexical/nodes/TrickNode'
 
 export default function Home() {
   const [currentRound, setCurrentRound] = useState(0);
@@ -12,6 +14,7 @@ export default function Home() {
   const [challenge, setChallenge] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [points, setPoints] = useState('');
+  const [tricks, setTricks] = useState<string[]>([]);
 
   const handleKeyPress = useCallback(async (event) => {
     if (event.keyCode === 39) {
@@ -45,6 +48,15 @@ export default function Home() {
     };
   }, [handleKeyPress]);
 
+  useEffect(() => {
+    const tricksClient = new TricksClient();
+    tricksClient.getAllTrickNames().then((trickNames: string[]) => {
+      const trickSet = new Set<string>(trickNames);
+      TrickNode.setTricks(trickSet);
+      setTricks(Array.from(trickSet));
+    });
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -72,8 +84,8 @@ export default function Home() {
         {isLoading && 
           <Image src='/intro.gif' alt='intro gif' width='320' height='180'/>
         }
-        <TrickAutoComplete/>
-        <ChallengeEditor />
+        {tricks.length > 0 && <TrickAutoComplete tricks={tricks}/>}
+        {tricks.length > 0 && <ChallengeEditor tricks={tricks}/>}
       </div>
       
       <style jsx>{`

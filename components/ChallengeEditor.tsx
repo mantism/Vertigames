@@ -16,6 +16,8 @@ import ChallengeCreatorPlugin from '../lexical/plugins/ChallengeCreatorPlugin';
 import { TricksClient } from '@trickingapi/tricking-ts';
 import TrickPlugin from '../lexical/plugins/TrickPlugin';
 import { TrickNode } from '../lexical/nodes/TrickNode';
+import TrickAutoCompletePlugin from '../lexical/plugins/TrickAutoCompletePlugin';
+import { TrickAutoCompleteNode } from '../lexical/nodes/TrickAutoCompleteNode';
 
 const theme = {
   // Theme styling goes here
@@ -32,21 +34,17 @@ function onError(error) {
   console.error(error);
 }
 
-export default function ChallengeEditor() {
+interface IProps {
+  tricks: string[];
+}
+
+export default function ChallengeEditor(props: IProps) {
   const initialConfig = {
     namespace: 'MyEditor', 
     theme,
     onError,
-    nodes: [EmoticonNode, TrickNode]
+    nodes: [EmoticonNode, TrickNode, TrickAutoCompleteNode]
   };
-
-  useEffect(() => {
-    const tricksClient = new TricksClient();
-    tricksClient.getAllTrickNames().then((trickNames: string[]) => {
-      const trickSet = new Set<string>(trickNames);
-      TrickNode.setTricks(trickSet);
-    });
-  }, []);
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
@@ -61,6 +59,7 @@ export default function ChallengeEditor() {
         <TreeViewPlugin />
         <EmoticonPlugin />
         <TrickPlugin />
+        <TrickAutoCompletePlugin tricks={props.tricks}/>
         <ChallengeCreatorPlugin />
         <CustomAutoFocusPlugin />
       </div>
