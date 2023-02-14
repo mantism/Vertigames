@@ -13,13 +13,13 @@ import onChange from '../lexical/OnChange';
 import EmoticonPlugin from '../lexical/plugins/EmoticonPlugin';
 import { EmoticonNode } from '../lexical/nodes/EmoticonNode';
 import ChallengeCreatorPlugin from '../lexical/plugins/ChallengeCreatorPlugin';
-import { TricksClient } from '@trickingapi/tricking-ts';
 import TrickPlugin from '../lexical/plugins/TrickPlugin';
 import { TrickNode } from '../lexical/nodes/TrickNode';
 import TrickAutoCompletePlugin from '../lexical/plugins/TrickAutoCompletePlugin';
 import { TrickAutoCompleteNode } from '../lexical/nodes/TrickAutoCompleteNode';
+import AutoCompleteButton from './AutoCompleteButton';
 
-const theme = {
+export const configTheme = {
   // Theme styling goes here
   ltr: 'ltr',
   rtl: 'rtl',
@@ -40,8 +40,8 @@ interface IProps {
 
 export default function ChallengeEditor(props: IProps) {
   const initialConfig = {
-    namespace: 'MyEditor', 
-    theme,
+    namespace: 'ChallengeEditor', 
+    configTheme,
     onError,
     nodes: [EmoticonNode, TrickNode, TrickAutoCompleteNode]
   };
@@ -62,6 +62,7 @@ export default function ChallengeEditor(props: IProps) {
         <TrickAutoCompletePlugin tricks={props.tricks}/>
         <ChallengeCreatorPlugin />
         <CustomAutoFocusPlugin />
+        <AutoCompleteButton/>
       </div>
     </LexicalComposer>
   );

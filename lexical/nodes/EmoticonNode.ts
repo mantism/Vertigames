@@ -1,4 +1,4 @@
-import { TextNode, EditorConfig, SerializedTextNode } from "lexical";
+import { TextNode, EditorConfig, SerializedTextNode, EditorThemeClasses } from "lexical";
 
 export class EmoticonNode extends TextNode {
   __className: string;
@@ -25,7 +25,7 @@ export class EmoticonNode extends TextNode {
     return dom;
   }
 
-  updateDOM(prevNode, dom, config) {
+  updateDOM(prevNode: TextNode, dom: { firstChild: any; }, config: { disableEvents: boolean; namespace: string; theme: EditorThemeClasses; }) {
     const inner = dom.firstChild;
     if (inner === null) {
       return true;

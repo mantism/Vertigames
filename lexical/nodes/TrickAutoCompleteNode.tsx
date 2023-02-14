@@ -5,11 +5,9 @@ import TrickAutoComplete from '../../components/TrickAutoComplete';
 export class TrickAutoCompleteNode extends DecoratorNode<ReactNode> {
   __tricks: string[];
   
-  constructor(tricks: string[]) {
-    super('inline-autocomplete');
-    console.log('constructing autocomplete node');
+  constructor(tricks: string[], key?: string) {
+    super(key);
     this.__tricks = tricks;
-    console.log('ummm');
   }
 
   static getType(): string {
@@ -17,8 +15,7 @@ export class TrickAutoCompleteNode extends DecoratorNode<ReactNode> {
   }
 
   static clone(node: TrickAutoCompleteNode): TrickAutoCompleteNode {
-    console.log('cloning autocomplete node');
-    return new TrickAutoCompleteNode(node.__tricks);
+    return new TrickAutoCompleteNode(node.__tricks, node.__key);
   }
 
   static isInline() {
@@ -34,24 +31,22 @@ export class TrickAutoCompleteNode extends DecoratorNode<ReactNode> {
   }
 
   createDOM(config: EditorConfig): HTMLElement {
-    console.log('creating dom for autocomplete node');
     const div = document.createElement('div');
     div.style.display = 'inline-autocomplete';
     return div;
   }
 
   updateDOM(): boolean {
-    return true;
+    return false;
   }
 
   decorate(editor: LexicalEditor, config: EditorConfig): ReactNode {
-    console.log('decorating autocomplete node');
+    //editor.getDecorators().add(this, this.__tricks);
     return <TrickAutoComplete tricks={this.__tricks}/>;
   }
 }
 
 export function $createTrickAutoCompleteNode(tricks: string[]): TrickAutoCompleteNode {
-  console.log('creating autocomplete node');
   return new TrickAutoCompleteNode(tricks);
 }
 

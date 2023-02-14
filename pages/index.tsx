@@ -52,7 +52,7 @@ export default function Home() {
     const tricksClient = new TricksClient();
     tricksClient.getAllTrickNames().then((trickNames: string[]) => {
       const trickSet = new Set<string>(trickNames);
-      TrickNode.setTricks(trickSet);
+      TrickNode.setTricks({ tricks: trickSet });
       setTricks(Array.from(trickSet));
     });
   }, []);

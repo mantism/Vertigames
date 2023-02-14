@@ -21,7 +21,7 @@ export class TrickNode extends TextNode {
     return this.__tricks;
   }
 
-  static setTricks(tricks: Set<string>) {
+  static setTricks({ tricks }: { tricks: Set<string>; }) {
     this.__tricks = tricks;
   }
 
@@ -34,7 +34,7 @@ export class TrickNode extends TextNode {
     return dom;
   }
 
-  updateDOM(prevNode, dom, config) {
+  updateDOM(prevNode: TextNode, dom: { firstChild: any; }, config: EditorConfig) {
     const inner = dom.firstChild;
     if (inner === null) {
       return true;
