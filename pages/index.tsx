@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 import { fetchPostJson } from '../utils/apiUtils'
 import ChallengeEditor from '../components/ChallengeEditor'
 import TrickAutoComplete from '../components/TrickAutoComplete'
-import { TricksClient } from '@trickingapi/tricking-ts'
+import { Trick, TricksClient } from '@trickingapi/tricking-ts'
 import { TrickNode } from '../lexical/nodes/TrickNode'
 
 export default function Home() {
@@ -15,6 +15,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [points, setPoints] = useState('');
   const [tricks, setTricks] = useState<string[]>([]);
+  const [currentTrick, setCurrentTrick] = useState('Butterfly Twist');
 
   const handleKeyPress = useCallback(async (event) => {
     if (event.keyCode === 39) {
@@ -50,10 +51,12 @@ export default function Home() {
 
   useEffect(() => {
     const tricksClient = new TricksClient();
-    tricksClient.getAllTrickNames().then((trickNames: string[]) => {
-      const trickSet = new Set<string>(trickNames);
-      TrickNode.setTricks({ tricks: trickSet });
-      setTricks(Array.from(trickSet));
+    tricksClient.getAllTricks().then((tricks) => {
+      const trickNames: string[] = [];
+      Object.entries(tricks).forEach(([key, value]) => {
+        trickNames.push(value.name);
+      });
+      setTricks(trickNames);
     });
   }, []);
 
@@ -84,8 +87,18 @@ export default function Home() {
         {isLoading && 
           <Image src='/intro.gif' alt='intro gif' width='320' height='180'/>
         }
-        {tricks.length > 0 && <TrickAutoComplete tricks={tricks}/>}
-        {tricks.length > 0 && <ChallengeEditor tricks={tricks}/>}
+        {tricks.length && 
+        <div className='tricks-randomizer' style={{textAlign: 'center'}}>
+          <button onClick={() => {
+            const num = Math.floor(Math.random() * tricks.length);
+            setCurrentTrick(tricks[num]);
+          }}>Random Trick</button>
+          <br/>
+          <h2>{currentTrick}</h2>
+          </div>
+        }
+        {/*tricks.length > 0 && <TrickAutoComplete tricks={tricks}/>*/}
+        {/*tricks.length > 0 && <ChallengeEditor tricks={tricks}/>*/}
       </div>
       
       <style jsx>{`
