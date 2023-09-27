@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import Countdown, { CountdownApi } from 'react-countdown';;
+import React, { useCallback, useEffect, useState } from "react";
+import Countdown, { CountdownApi } from "react-countdown";
 
 let countdownApi = null;
 
@@ -10,7 +10,7 @@ export default function CountdownWidget() {
     const handleReset = () => {
       setDate(Date.now() + 20000);
       handlePauseClick();
-    }
+    };
 
     const handlePauseClick = () => {
       countdownApi && countdownApi.pause();
@@ -19,9 +19,10 @@ export default function CountdownWidget() {
     const handlePlayClick = () => {
       countdownApi && countdownApi.start();
     };
-
+    // Right Arrow Key
     if (event.keyCode === 39) {
       handleReset();
+      // Spacebar
     } else if (event.keyCode === 32) {
       handlePauseClick();
     } else {
@@ -37,28 +38,41 @@ export default function CountdownWidget() {
     if (countdown) {
       countdownApi = countdown.getApi();
     }
-  }
+  };
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyPress);
     return () => {
-        window.removeEventListener("keydown", handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [handleKeyPress]);
 
   return (
-    <Countdown 
-      date={date}
-      //@ts-ignore
-      handleUpdate={handleUpdate}
-      ref={setRef}
-      autoStart={false}
-      renderer={({ formatted: { hours, minutes, seconds }, completed }) => {
-        if (countdownApi && countdownApi.isCompleted()) {
-          return <h1 className='red'>X</h1>
-        }
-        return <h1>{seconds}</h1>
-      }}
-    />
+    <>
+      <Countdown
+        date={date}
+        //@ts-ignore
+        handleUpdate={handleUpdate}
+        ref={setRef}
+        autoStart={false}
+        renderer={({ formatted: { hours, minutes, seconds }, completed }) => {
+          if (countdownApi && countdownApi.isCompleted()) {
+            return <h1>X</h1>;
+          }
+          return <h1>{seconds}</h1>;
+        }}
+      />
+      <style jsx>
+        {`
+          h1 {
+            font-size: 40em;
+            padding: 0;
+            margin: 0;
+            color: white;
+            text-align: center;
+          }
+        `}
+      </style>
+    </>
   );
 }

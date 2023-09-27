@@ -2,13 +2,11 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState, useCallback } from "react";
 import styles from "../styles/Home.module.css";
-import { fetchPostJson } from "../utils/apiUtils";
-import ChallengeEditor from "../components/ChallengeEditor";
-import TrickAutoComplete from "../components/TrickAutoComplete";
+import { fetchPostJson } from "../../utils/apiUtils";
+import ChallengeEditor from "../../components/ChallengeEditor";
+import TrickAutoComplete from "../../components/TrickAutoComplete";
 import { Trick, TricksClient } from "@trickingapi/tricking-ts";
-import { TrickNode } from "../lexical/nodes/TrickNode";
-import CountdownWidget from "../components/CountdownWidget";
-import CurrentRoundToggle from "../components/CurrentRoundToggle";
+import { TrickNode } from "../../lexical/nodes/TrickNode";
 
 export default function Home() {
   const [currentRound, setCurrentRound] = useState(0);
@@ -72,26 +70,61 @@ export default function Home() {
         <title>Vertigames App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1>VERTIGO V</h1>
       <div className={styles.main}>
-        <CountdownWidget />
+        <h1 className={styles.title}>2023 Vertigames</h1>
+        {false && (
+          <h2>
+            {currentRound === 0 ? (
+              <div className="logos">
+                <Image
+                  src="/V-Logo.png"
+                  alt="v-logo"
+                  width="320"
+                  height="320"
+                />
+              </div>
+            ) : (
+              <div className="caption">
+                Round {currentRound} - {points}{" "}
+                {currentRound < 3 ? "POINTS NEEDED TO MOVE ON" : "POINTS WINS"}
+              </div>
+            )}
+          </h2>
+        )}
+        {false && <h2>{!isLoading && challenge}</h2>}
+        {isLoading && (
+          <Image src="/intro.gif" alt="intro gif" width="320" height="180" />
+        )}
+        {tricks.length && (
+          <div className="tricks-randomizer" style={{ textAlign: "center" }}>
+            <button
+              onClick={() => {
+                const num = Math.floor(Math.random() * tricks.length);
+                setCurrentTrick(tricks[num]);
+              }}
+            >
+              Random Trick
+            </button>
+            <br />
+            <h2>{currentTrick}</h2>
+          </div>
+        )}
+        {/*tricks.length > 0 && <TrickAutoComplete tricks={tricks}/>*/}
+        {/*tricks.length > 0 && <ChallengeEditor tricks={tricks}/>*/}
       </div>
+
       <style jsx>{`
-        body {
-          margin: 0;
-          background: 0;
-          width: 100vw;
-          height: 100vh;
+        main {
           text-align: center;
-          background-color: black;
+        }
+
+        .red {
+          color: red;
         }
 
         h1 {
-          font-family: "Times New Roman", Times, serif;
-          text-align: center;
-          font-size: 20em;
-          color: white;
-          padding-top: 1em;
+          font-size: 5em;
+          padding: 0;
           margin: 0;
         }
       `}</style>
